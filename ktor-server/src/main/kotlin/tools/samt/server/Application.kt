@@ -16,6 +16,7 @@ fun main() {
 class MyGreeter : Greeter {
     override fun greet(
         name: String,
+        id: ID,
         binary: ByteArray?,
         type: GreetingType?,
         anotherString: String?,
@@ -24,8 +25,8 @@ class MyGreeter : Greeter {
         return Greeting("Hello, $name!")
     }
 
-    override fun greetAll(names: List<String>): List<Greeting> {
-        return names.map { Greeting("Hello, $it!") }
+    override fun greetAll(names: List<String?>): Map<String, Greeting?> {
+        return names.associate { (it ?: "<unknown>") to Greeting("Hello, $it!") }
     }
 
     override fun greeting(name: String): String {

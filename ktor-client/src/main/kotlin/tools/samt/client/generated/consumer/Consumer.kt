@@ -80,7 +80,7 @@ class GreeterEndpointImpl(private val baseUrl: String) : tools.samt.client.gener
         val bodyAsText = `client response`.bodyAsText()
         val jsonElement = Json.parseToJsonElement(bodyAsText)
 
-        jsonElement.jsonObject.mapValues { (_, value) -> value?.let { value -> tools.samt.client.generated.greeter.`decode Greeting`(value) } }
+        jsonElement.jsonObject.mapValues { (_, value) -> value.takeUnless { it is JsonNull }?.let { value -> tools.samt.client.generated.greeter.`decode Greeting`(value) } }
     }
 
     override fun greeting(name: String): String = runBlocking {

@@ -38,15 +38,15 @@ class GreeterEndpointImpl(private val baseUrl: String) : tools.samt.client.gener
                     appendPathSegments(name, encodeSlash = true)
 
                     // Encode query parameters
+                    this.parameters.append("anotherString", (anotherString?.let { anotherString -> JsonPrimitive(anotherString) } ?: JsonNull).toString())
                 }
                 contentType(ContentType.Application.Json)
                 this.method = HttpMethod.Post
+                header("binary", binary?.let { binary -> JsonPrimitive(binary.encodeBase64()) } ?: JsonNull)
                 setBody(
                     buildJsonObject {
                         put("id", id?.let { id -> tools.samt.client.generated.greeter.`encode ID`(id) } ?: JsonNull)
-                        put("binary", binary?.let { binary -> JsonPrimitive(binary.encodeBase64()) } ?: JsonNull)
                         put("type", type?.let { type -> tools.samt.client.generated.greeter.`encode GreetingType`(type) } ?: JsonNull)
-                        put("anotherString", anotherString?.let { anotherString -> JsonPrimitive(anotherString) } ?: JsonNull)
                         put("inBody", inBody?.let { inBody -> tools.samt.client.generated.greeter.`encode Complex`(inBody) } ?: JsonNull)
                     }
                 )
@@ -67,12 +67,12 @@ class GreeterEndpointImpl(private val baseUrl: String) : tools.samt.client.gener
                     appendPathSegments("all", encodeSlash = true)
 
                     // Encode query parameters
+                    this.parameters.append("names", (JsonArray(names.map { it?.let { it -> JsonPrimitive(it.also { require(it.length >= 1 && it.length <= 50) }) } ?: JsonNull })).toString())
                 }
                 contentType(ContentType.Application.Json)
                 this.method = HttpMethod.Get
                 setBody(
                     buildJsonObject {
-                        put("names", JsonArray(names.map { it?.let { it -> JsonPrimitive(it.also { require(it.length >= 1 && it.length <= 50) }) } ?: JsonNull }))
                     }
                 )
             }

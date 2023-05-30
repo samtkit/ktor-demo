@@ -50,8 +50,8 @@ fun Routing.routeGreeterEndpoint(
 
             // Decode parameter binary
             val `parameter binary` = run {
-                // Read from body
-                val jsonElement = body.jsonObject["binary"]?.takeUnless { it is JsonNull } ?: return@run null
+                // Read from header
+                val jsonElement = call.request.headers["binary"]?.toJsonOrNull() ?: return@run null
                 jsonElement.jsonPrimitive.content.decodeBase64Bytes()
             }
 
@@ -64,8 +64,8 @@ fun Routing.routeGreeterEndpoint(
 
             // Decode parameter anotherString
             val `parameter anotherString` = run {
-                // Read from body
-                val jsonElement = body.jsonObject["anotherString"]?.takeUnless { it is JsonNull } ?: return@run null
+                // Read from query
+                val jsonElement = call.request.queryParameters["anotherString"]?.toJsonOrNull() ?: return@run null
                 jsonElement.jsonPrimitive.content
             }
 
@@ -94,8 +94,8 @@ fun Routing.routeGreeterEndpoint(
 
             // Decode parameter names
             val `parameter names` = run {
-                // Read from body
-                val jsonElement = body.jsonObject["names"]!!
+                // Read from query
+                val jsonElement = call.request.queryParameters["names"]!!.toJson()
                 jsonElement.jsonArray.map { it.takeUnless { it is JsonNull }?.let { it.jsonPrimitive.content.also { require(it.length >= 1 && it.length <= 50) } } }
             }
 

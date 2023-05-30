@@ -6,8 +6,8 @@ provide GreeterEndpoint {
     transport http {
         operations: {
             Greeter: {
-                greet: "POST /greet/{name} {header:binary} {cookie:type} {query:anotherString}",
-                greetAll: "GET /greet/all {query:names}",
+                greet: "POST /greet/{name} {binary in header} {anotherString in query}",
+                greetAll: "GET /greet/all {names in query}",
                 greeting: "GET /greeting/{name}"
             }
         }

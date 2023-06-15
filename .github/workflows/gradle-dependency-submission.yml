@@ -22,7 +22,8 @@ jobs:
         uses: mikepenz/gradle-dependency-submission@main
         with:
           gradle-build-module: |-
-            cli
+            ktor-client
+            ktor-server
           gradle-build-configuration: |-
             compileClasspath
           sub-module-mode: 'INDIVIDUAL_DEEP'

@@ -37,7 +37,7 @@ task("generateSources") {
     doLast {
         exec {
             workingDir = File("../model")
-            commandLine = listOf(if (isWindows) "./samtw.bat" else "./samtw", "compile")
+            commandLine = if (isWindows) listOf("cmd.exe", "/c", "samtw.bat", "compile") else listOf("./samtw", "compile")
         }
     }
 }

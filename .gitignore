@@ -31,7 +31,3 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
-
-### SAMT generated code ###
-ktor-client/**/generated/
-ktor-server/**/generated/

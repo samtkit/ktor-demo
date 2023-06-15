@@ -1,12 +1,12 @@
 generators:
   - name: kotlin-ktor-provider
-    output: ../ktor-server/src/main/kotlin
+    output: ../ktor-server/build/generated/kotlin
     options:
       removePrefixFromSamtPackage: tools.samt
       addPrefixToKotlinPackage: tools.samt.server.generated
       skipKtorServer: "true"
   - name: kotlin-ktor-consumer
-    output: ../ktor-client/src/main/kotlin
+    output: ../ktor-client/build/generated/kotlin
     options:
       removePrefixFromSamtPackage: tools.samt
       addPrefixToKotlinPackage: tools.samt.client.generated

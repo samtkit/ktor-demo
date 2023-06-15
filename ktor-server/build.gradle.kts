@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.cli.common.isWindows
+
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
@@ -29,4 +31,22 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+}
+
+task("generateSources") {
+    doLast {
+        exec {
+            workingDir = File("../model")
+            commandLine = if (isWindows) listOf("cmd.exe", "/c", "samtw.bat", "compile") else listOf("./samtw", "compile")
+        }
+    }
+}
+tasks.compileKotlin {
+    dependsOn("generateSources")
+}
+
+sourceSets {
+    named("main") {
+        java.srcDir("$buildDir/generated/kotlin")
+    }
 }
